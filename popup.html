@@ -4,15 +4,38 @@
     <meta charset="UTF-8">
     <title>Score Export</title>
     <style>
-      body { font-family: sans-serif; padding: 10px; width: 220px; }
-      #status { margin-top: 10px; color: green; }
-      #error { margin-top: 10px; color: red; }
+      body {
+        font-family: sans-serif;
+        padding: 10px;
+        width: 260px;
+      }
+      #status {
+        margin-top: 10px;
+        color: green;
+      }
+      #error {
+        margin-top: 10px;
+        color: red;
+      }
+      #quoteResult {
+        margin-top: 5px;
+        white-space: pre-wrap;
+        font-family: monospace;
+      }
     </style>
   </head>
   <body>
     <button id="export">スプレッドシートに送信</button>
     <div id="status"></div>
     <div id="error"></div>
+
+    <hr>
+
+    <h4 style="margin-top: 1em;">miriさんのように鳴こう</h4>
+    <label>文字列を加工：</label><br>
+    <input type="text" id="quoteInput" placeholder="例: んにゃあ" />
+    <div id="quoteResult"></div>
+
     <script src="popup.js"></script>
   </body>
 </html>

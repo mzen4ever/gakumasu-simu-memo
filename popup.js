@@ -4,10 +4,9 @@ document.getElementById("export").addEventListener("click", async () => {
   status.textContent = "";
   error.textContent = "";
 
-  // Webhook URL の取得（オプション設定から）
   chrome.storage.sync.get(['webhookUrl'], async ({ webhookUrl }) => {
     if (!webhookUrl) {
-      error.textContent = "❌ Webhook URLが未設定です。拡張機能のオプションから設定してください。";
+      error.textContent = "Webhook URLが未設定です。拡張機能のオプションから設定してください。";
       return;
     }
 
@@ -16,20 +15,17 @@ document.getElementById("export").addEventListener("click", async () => {
     const [{ result }] = await chrome.scripting.executeScript({
       target: { tabId: tab.id },
       func: () => {
-        // スコア取得
         const tds = document.querySelectorAll("table.SimulatorResult_stats__nyeMw tbody td");
         const values = Array.from(tds).map(td => td.innerText);
 
-        // ステージ名取得（例：24-1）
         const span = document.querySelector("div.Simulator_pItemsRow__T_G_R span");
         const stage = span ? span.innerText.trim() : "Unknown";
 
-        // URL取得
         const urlElement = document.querySelector("div.Simulator_url__ZdNaT");
         const url = urlElement ? urlElement.innerText.trim() : "";
 
         if (values.length === 0) {
-          return { error: "❌ スコアが取得できませんでした。" };
+          return { error: "スコアが取得できませんでした。" };
         }
 
         return { values, stage, url };
@@ -37,11 +33,10 @@ document.getElementById("export").addEventListener("click", async () => {
     });
 
     if (!result || result.error || !result.values || result.values.length === 0) {
-      error.textContent = result?.error || "❌ データが取得できませんでした。";
+      error.textContent = result?.error || "データが取得できませんでした。";
       return;
     }
 
-    // Webhook に送信
     try {
       const response = await fetch(webhookUrl, {
         method: "POST",
@@ -53,9 +48,36 @@ document.getElementById("export").addEventListener("click", async () => {
         })
       });
       const text = await response.text();
-      status.textContent = "✅ 送信成功: " + text;
+      status.textContent = "送信成功: " + text;
     } catch (err) {
-      error.textContent = "❌ 送信失敗: " + err.message;
+      error.textContent = "送信失敗: " + err.message;
     }
+  });
+});
+
+// 「んにゃあ」→「ん”に”ゃ”あ”」変換機能
+document.getElementById("quoteInput").addEventListener("input", () => {
+  const input = document.getElementById("quoteInput").value;
+  let result = "";
+  for (let i = 0; i < input.length; i++) {
+    if (i === 0) {
+      result += input[i];
+    } else {
+      result += input[i] + "”"; // 全角ダブルクォート
+    }
+  }
+  document.getElementById("quoteResult").textContent = result;
+  document.getElementById("copyStatus").textContent = ""; // コピー状態をクリア
+});
+
+// コピー処理
+document.getElementById("copyButton").addEventListener("click", () => {
+  const resultText = document.getElementById("quoteResult").textContent;
+  if (!resultText) return;
+
+  navigator.clipboard.writeText(resultText).then(() => {
+    document.getElementById("copyStatus").textContent = "コピーしました";
+  }).catch(err => {
+    document.getElementById("copyStatus").textContent = "コピーに失敗しました";
   });
 });
