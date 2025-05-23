@@ -55,12 +55,12 @@ document.getElementById("export").addEventListener("click", async () => {
   });
 });
 
-// 「んにゃあ」→「ん”に”ゃ”あ”」変換機能（1文字目から付ける）
+// 「んにゃあ」→「ん”に”ゃ”あ”」変換機能（すべての文字に”を付ける）
 document.getElementById("quoteInput").addEventListener("input", () => {
   const input = document.getElementById("quoteInput").value;
-  const result = Array.from(input).map(char => char + "”").join(""); // すべての文字に全角”
+  const result = Array.from(input).map(char => char + "”").join(""); // 全文字に全角ダブルクォート
   document.getElementById("quoteResult").textContent = result;
-  document.getElementById("copyStatus").textContent = ""; // コピー状態をクリア
+  document.getElementById("copyStatus").textContent = ""; // コピー状態リセット
 });
 
 // コピー処理

@@ -22,6 +22,11 @@
         white-space: pre-wrap;
         font-family: monospace;
       }
+      #copyStatus {
+        color: green;
+        font-size: small;
+        margin-top: 3px;
+      }
     </style>
   </head>
   <body>
@@ -32,9 +37,10 @@
     <hr>
 
     <h4 style="margin-top: 1em;">miriさんのように鳴こう</h4>
-    <label>文字列を加工：</label><br>
     <input type="text" id="quoteInput" placeholder="例: んにゃあ" />
     <div id="quoteResult"></div>
+    <button id="copyButton" style="margin-top: 5px;">クリップボードにコピー</button>
+    <div id="copyStatus"></div>
 
     <script src="popup.js"></script>
   </body>
