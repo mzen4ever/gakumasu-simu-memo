@@ -55,17 +55,10 @@ document.getElementById("export").addEventListener("click", async () => {
   });
 });
 
-// 「んにゃあ」→「ん”に”ゃ”あ”」変換機能
+// 「んにゃあ」→「ん”に”ゃ”あ”」変換機能（1文字目から付ける）
 document.getElementById("quoteInput").addEventListener("input", () => {
   const input = document.getElementById("quoteInput").value;
-  let result = "";
-  for (let i = 0; i < input.length; i++) {
-    if (i === 0) {
-      result += input[i];
-    } else {
-      result += input[i] + "”"; // 全角ダブルクォート
-    }
-  }
+  const result = Array.from(input).map(char => char + "”").join(""); // すべての文字に全角”
   document.getElementById("quoteResult").textContent = result;
   document.getElementById("copyStatus").textContent = ""; // コピー状態をクリア
 });
