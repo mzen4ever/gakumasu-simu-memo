@@ -34,7 +34,7 @@
 1. gktools シミュレータ上でアイドル固有カードの「番号（数字）」を確認する
 ![カード番号の見つけ方](https://github.com/mzen4ever/gakumasu-simu-memo/blob/main/images/url_idol_number.png)
 
-2. 「未強化」と「強化後」の 2 種類のカード番号を list シートの同じ名前でそれぞれ別の行に追加する
+2. 「未強化」と「強化後」の 2 種類のカード番号を list シートのcardNumberの列に行追加する
 3. 表示したい名前（アイドル名や衣装名など）を右の列（B列）に記入する
 
 例：
