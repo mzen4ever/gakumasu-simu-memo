@@ -3,7 +3,7 @@ https://github.com/user-attachments/assets/3a44d30f-91f5-49c3-ae4d-a2d73daee3ac
 
 # Score Exporter 拡張機能
 
-このChrome拡張機能は、[gktools.ris.moe](https://gktools.ris.moe) のスコアシミュレーターからスコア結果とステージ情報を取得し、Google スプレッドシートに自動で記録します。
+このChrome拡張機能は、[gktools.ris.moe](https://gktools.ris.moe) のスコアシミュレーターからスコア結果とステージ情報を取得し、Google スプレッドシートに簡単に記録できるツールです。
 
 ## 機能概要
 
