@@ -58,7 +58,7 @@ document.getElementById("export").addEventListener("click", async () => {
 // 「んにゃあ」→「ん”に”ゃ”あ”」変換機能（すべての文字に”を付ける）
 document.getElementById("quoteInput").addEventListener("input", () => {
   const input = document.getElementById("quoteInput").value;
-  const result = Array.from(input).map(char => char + "”").join(""); // 全文字に全角ダブルクォート
+  const result = Array.from(input).map(char => char + "゛").join(""); // 濁点に変更
   document.getElementById("quoteResult").textContent = result;
   document.getElementById("copyStatus").textContent = ""; // コピー状態リセット
 });
