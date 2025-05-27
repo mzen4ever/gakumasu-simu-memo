@@ -1,7 +1,7 @@
 document.getElementById("export").addEventListener("click", async () => {
   const status = document.getElementById("status");
   const error = document.getElementById("error");
-  status.textContent = "";
+  status.textContent = "送信中…";
   error.textContent = "";
 
   chrome.storage.sync.get(['webhookUrl'], async ({ webhookUrl }) => {
