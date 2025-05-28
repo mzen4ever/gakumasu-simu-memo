@@ -23,7 +23,7 @@ https://github.com/user-attachments/assets/9a7552bc-c083-4ee6-8e17-b38895bc5749
 
 ## 2. Chrome拡張機能のインストール手順（ローカル読み込み）とWebhook URL の設定
 
-1. このリポジトリをダウンロード（「Code」＞「Download ZIP」）し、ZIPを解凍する
+1. 下記リンクからリポジトリをダウンロードし、ZIPを解凍する  
    [https://github.com/mzen4ever/gakumasu-simu-memo.git](https://github.com/mzen4ever/gakumasu-simu-memo/archive/refs/heads/main.zip)
 2. Chrome の拡張機能ページ（chrome://extensions/）を開く
 3. 右上の「デベロッパーモード」をオンにする
