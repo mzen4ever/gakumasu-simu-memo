@@ -17,7 +17,7 @@ https://github.com/user-attachments/assets/9a7552bc-c083-4ee6-8e17-b38895bc5749
    - 種類：ウェブアプリ
    - 実行する関数：doPost
    - アクセス権：全員（匿名ユーザー含む）
-5. 表示された `/exec` で終わる URL をコピー（後で拡張機能に設定します、これが）
+5. 表示された `/exec` で終わる URL をコピー（後で拡張機能に設定します、これがWebhook URL）
 
 ---
 
