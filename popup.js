@@ -1,78 +1,81 @@
-document.getElementById("export").addEventListener("click", async () => {
-  const status = document.getElementById("status");
-  const error = document.getElementById("error");
-  const note = document.getElementById("noteInput").value;
+document.addEventListener("DOMContentLoaded", () => {
+  // 送信ボタン処理
+  document.getElementById("export").addEventListener("click", async () => {
+    const status = document.getElementById("status");
+    const error = document.getElementById("error");
+    const note = document.getElementById("noteInput").value;
 
-  status.textContent = "送信中…";
-  error.textContent = "";
+    status.textContent = "送信中…";
+    error.textContent = "";
 
-  chrome.storage.sync.get(['webhookUrl'], async ({ webhookUrl }) => {
-    if (!webhookUrl) {
-      status.textContent = "";
-      error.textContent = "Webhook URLが未設定です。オプションで設定してください。";
-      return;
-    }
+    chrome.storage.sync.get(['webhookUrl'], async ({ webhookUrl }) => {
+      if (!webhookUrl) {
+        status.textContent = "";
+        error.textContent = "Webhook URLが未設定です。オプションで設定してください。";
+        return;
+      }
 
-    const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-    const [{ result }] = await chrome.scripting.executeScript({
-      target: { tabId: tab.id },
-      func: () => {
-        const tds = document.querySelectorAll("table.SimulatorResult_stats__nyeMw tbody td");
-        const values = Array.from(tds).map(td => td.innerText);
+      const [{ result }] = await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: () => {
+          const tds = document.querySelectorAll("table.SimulatorResult_stats__nyeMw tbody td");
+          const values = Array.from(tds).map(td => td.innerText);
 
-        const span = document.querySelector("div.Simulator_pItemsRow__T_G_R span");
-        const stage = span ? span.innerText.trim() : "Unknown";
+          const span = document.querySelector("div.Simulator_pItemsRow__T_G_R span");
+          const stage = span ? span.innerText.trim() : "Unknown";
 
-        const urlElement = document.querySelector("div.Simulator_url__ZdNaT");
-        const url = urlElement ? urlElement.innerText.trim() : "";
+          const urlElement = document.querySelector("div.Simulator_url__ZdNaT");
+          const url = urlElement ? urlElement.innerText.trim() : "";
 
-        if (values.length === 0) {
-          return { error: "スコアが取得できませんでした。" };
+          if (values.length === 0) {
+            return { error: "スコアが取得できませんでした。" };
+          }
+
+          return { values, stage, url };
         }
+      });
 
-        return { values, stage, url };
+      if (!result || result.error || !result.values || result.values.length === 0) {
+        status.textContent = "";
+        error.textContent = result?.error || "データが取得できませんでした。";
+        return;
+      }
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            values: result.values,
+            stage: result.stage,
+            url: result.url,
+            note: note
+          })
+        });
+        const text = await response.text();
+        status.textContent = "送信成功: " + text;
+      } catch (err) {
+        status.textContent = "";
+        error.textContent = "送信失敗: " + err.message;
       }
     });
-
-    if (!result || result.error || !result.values || result.values.length === 0) {
-      status.textContent = "";
-      error.textContent = result?.error || "データが取得できませんでした。";
-      return;
-    }
-
-    try {
-      const response = await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          values: result.values,
-          stage: result.stage,
-          url: result.url,
-          note: note
-        })
-      });
-      const text = await response.text();
-      status.textContent = "送信成功: " + text;
-    } catch (err) {
-      status.textContent = "";
-      error.textContent = "送信失敗: " + err.message;
-    }
   });
-});
 
-// 鳴き声変換
-document.getElementById("quoteInput").addEventListener("input", () => {
-  const input = document.getElementById("quoteInput").value;
-  const result = Array.from(input).map(char => char + "゛").join("");
-  document.getElementById("quoteResult").textContent = result;
-  document.getElementById("copyStatus").textContent = "";
-});
+  // 鳴き声変換
+  document.getElementById("quoteInput").addEventListener("input", () => {
+    const input = document.getElementById("quoteInput").value;
+    const result = Array.from(input).map(char => char + "゛").join("");
+    document.getElementById("quoteResult").textContent = result;
+    document.getElementById("copyStatus").textContent = "";
+  });
 
-// コピー
-document.getElementById("copyBtn").addEventListener("click", () => {
-  const result = document.getElementById("quoteResult").textContent;
-  navigator.clipboard.writeText(result).then(() => {
-    document.getElementById("copyStatus").textContent = "コピーしました！";
+  // コピー
+  document.getElementById("copyButton").addEventListener("click", () => {
+    const result = document.getElementById("quoteResult").textContent;
+    navigator.clipboard.writeText(result).then(() => {
+      document.getElementById("copyStatus").textContent = "コピーしました！";
+    });
   });
 });
