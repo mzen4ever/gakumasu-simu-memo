@@ -17,15 +17,19 @@ https://github.com/user-attachments/assets/9a7552bc-c083-4ee6-8e17-b38895bc5749
    - 種類：ウェブアプリ
    - 実行する関数：doPost
    - アクセス権：全員（匿名ユーザー含む）
-5. 表示された `/exec` で終わる URL をコピー（後で拡張機能に設定します）
+5. 表示された `/exec` で終わる URL をコピー（後で拡張機能に設定します、これが）
 
 ---
 
-## 2. Webhook URL を拡張機能に設定
+## 2. Chrome拡張機能のインストール手順（ローカル読み込み）とWebhook URL の設定
 
-1. Chrome の拡張機能ページ（chrome://extensions/）を開く
-2. Score Exporter の「詳細」＞「オプション」をクリック
-3. 発行した Webhook URL を貼り付けて「保存」
+1. このリポジトリをダウンロード（「Code」＞「Download ZIP」）し、ZIPを解凍する
+2. Chrome の拡張機能ページ（chrome://extensions/）を開く
+3. 右上の「デベロッパーモード」をオンにする
+4. 「パッケージ化されていない拡張機能を読み込む」をクリックし、解凍したフォルダを選択
+5. Score Exporter の「詳細」＞「オプション」をクリック
+6. 発行した Webhook URL を貼り付けて「保存」
+7. 拡張機能が追加され、「スプレッドシートに送信」ボタンが表示される
 
 ---
 
