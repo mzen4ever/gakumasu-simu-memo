@@ -27,10 +27,23 @@
         font-size: small;
         margin-top: 3px;
       }
+      label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      input[type="text"] {
+        width: 100%;
+        margin-top: 4px;
+        box-sizing: border-box;
+      }
     </style>
   </head>
   <body>
-    <button id="export">スプレッドシートに送信</button>
+    <label for="noteInput">備考（任意）</label>
+    <input type="text" id="noteInput" placeholder="自由に入力できます" />
+
+    <button id="export" style="margin-top: 10px;">スプレッドシートに送信</button>
     <div id="status"></div>
     <div id="error"></div>
 

@@ -1,12 +1,15 @@
 document.getElementById("export").addEventListener("click", async () => {
   const status = document.getElementById("status");
   const error = document.getElementById("error");
+  const note = document.getElementById("noteInput").value;
+
   status.textContent = "送信中…";
   error.textContent = "";
 
   chrome.storage.sync.get(['webhookUrl'], async ({ webhookUrl }) => {
     if (!webhookUrl) {
-      error.textContent = "Webhook URLが未設定です。拡張機能のオプションから設定してください。";
+      status.textContent = "";
+      error.textContent = "Webhook URLが未設定です。オプションで設定してください。";
       return;
     }
 
@@ -33,6 +36,7 @@ document.getElementById("export").addEventListener("click", async () => {
     });
 
     if (!result || result.error || !result.values || result.values.length === 0) {
+      status.textContent = "";
       error.textContent = result?.error || "データが取得できませんでした。";
       return;
     }
@@ -44,33 +48,31 @@ document.getElementById("export").addEventListener("click", async () => {
         body: JSON.stringify({
           values: result.values,
           stage: result.stage,
-          url: result.url
+          url: result.url,
+          note: note
         })
       });
       const text = await response.text();
       status.textContent = "送信成功: " + text;
     } catch (err) {
+      status.textContent = "";
       error.textContent = "送信失敗: " + err.message;
     }
   });
 });
 
-// 「んにゃあ」→「ん”に”ゃ”あ”」変換機能（すべての文字に”を付ける）
+// 鳴き声変換
 document.getElementById("quoteInput").addEventListener("input", () => {
   const input = document.getElementById("quoteInput").value;
-  const result = Array.from(input).map(char => char + "゛").join(""); // 濁点に変更
+  const result = Array.from(input).map(char => char + "゛").join("");
   document.getElementById("quoteResult").textContent = result;
-  document.getElementById("copyStatus").textContent = ""; // コピー状態リセット
+  document.getElementById("copyStatus").textContent = "";
 });
 
-// コピー処理
-document.getElementById("copyButton").addEventListener("click", () => {
-  const resultText = document.getElementById("quoteResult").textContent;
-  if (!resultText) return;
-
-  navigator.clipboard.writeText(resultText).then(() => {
-    document.getElementById("copyStatus").textContent = "コピーしました";
-  }).catch(err => {
-    document.getElementById("copyStatus").textContent = "コピーに失敗しました";
+// コピー
+document.getElementById("copyBtn").addEventListener("click", () => {
+  const result = document.getElementById("quoteResult").textContent;
+  navigator.clipboard.writeText(result).then(() => {
+    document.getElementById("copyStatus").textContent = "コピーしました！";
   });
 });
