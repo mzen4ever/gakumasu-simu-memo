@@ -6,6 +6,8 @@
 
 ## 1. Google スプレッドシートのコピーと Webhook URL の発行
 
+https://github.com/user-attachments/assets/9a7552bc-c083-4ee6-8e17-b38895bc5749
+
 1. 以下のテンプレートスプレッドシートを開いて「ファイル」＞「コピーを作成」を選択  
    [テンプレートシートを開く](https://docs.google.com/spreadsheets/d/1CGYGaRDrwSilKyTSfuyIyMcH_3A9F2bcEmjiFDMNsm0/edit?usp=sharing)
 2. コピー先のシートで「拡張機能」＞「Apps Script」を開く
