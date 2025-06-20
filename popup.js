@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // 送信ボタン処理
+  // 送信ボタン
   document.getElementById("export").addEventListener("click", async () => {
     const status = document.getElementById("status");
     const error = document.getElementById("error");
@@ -26,23 +26,14 @@ document.addEventListener("DOMContentLoaded", () => {
           const span = document.querySelector("div.Simulator_pItemsRow__T_G_R span");
           const stage = span ? span.innerText.trim() : "Unknown";
 
-<<<<<<< HEAD
-          const urlElement = document.querySelector("div.Simulator_url__ZdNaT");
-          const url = urlElement ? urlElement.innerText.trim() : "";
-=======
           const meta = document.querySelector('meta[property="og:image"]');
           const imageUrl = meta ? meta.getAttribute("content") : "";
->>>>>>> master
 
           if (values.length === 0) {
             return { error: "スコアが取得できませんでした。" };
           }
 
-<<<<<<< HEAD
-          return { values, stage, url };
-=======
           return { values, stage, imageUrl };
->>>>>>> master
         }
       });
 
@@ -52,8 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-<<<<<<< HEAD
-=======
       // og:image URLからSimulator URLを復元
       let simulatorUrl = "";
       if (result.imageUrl) {
@@ -64,7 +53,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
->>>>>>> master
       try {
         const response = await fetch(webhookUrl, {
           method: "POST",
@@ -72,11 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
           body: JSON.stringify({
             values: result.values,
             stage: result.stage,
-<<<<<<< HEAD
-            url: result.url,
-=======
             url: simulatorUrl,
->>>>>>> master
             note: note
           })
         });
