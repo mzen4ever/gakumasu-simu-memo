@@ -46,6 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // og:image URLからSimulator URLを復元
       let simulatorUrl = "";
       if (result.imageUrl) {
+        const decodedUrl = result.imageUrl.replace(/&amp;/g, "&");
         const queryIndex = result.imageUrl.indexOf("?");
         if (queryIndex !== -1) {
           const query = result.imageUrl.slice(queryIndex + 1);
