@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Score Export</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 10px;
+        width: 260px;
+      }
+      #status {
+        margin-top: 10px;
+        color: green;
+      }
+      #error {
+        margin-top: 10px;
+        color: red;
+      }
+      #quoteResult {
+        margin-top: 5px;
+        white-space: pre-wrap;
+        font-family: monospace;
+      }
+      #copyStatus {
+        color: green;
+        font-size: small;
+        margin-top: 3px;
+      }
+      label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      input[type="text"] {
+        width: 100%;
+        margin-top: 4px;
+        box-sizing: border-box;
+      }
+    </style>
+  </head>
+  <body>
+    <label for="noteInput">備考（任意）</label>
+    <input type="text" id="noteInput" placeholder="自由に入力できます" />
+
+    <button id="export" style="margin-top: 10px;">スプレッドシートに送信</button>
+    <div id="status"></div>
+    <div id="error"></div>
+
+    <hr>
+
+    <h4 style="margin-top: 1em;">miriさんのように鳴こう</h4>
+    <input type="text" id="quoteInput" placeholder="例: んにゃあ" />
+    <div id="quoteResult"></div>
+    <button id="copyButton" style="margin-top: 5px;">クリップボードにコピー</button>
+    <div id="copyStatus"></div>
+
+    <script src="popup.js"></script>
+  </body>
+</html>
